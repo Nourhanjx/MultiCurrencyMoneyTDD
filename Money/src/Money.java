@@ -1,4 +1,4 @@
-class Money {
+class Money implements Expression{
 
 
     protected int amount;
@@ -33,6 +33,10 @@ class Money {
 
     Money times(int multiplier){
         return new Money(amount *=  multiplier,currency);
+    }
+
+    Expression Plus(Money addend){
+        return new Money(amount+addend.amount,currency);
     }
 
 

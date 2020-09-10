@@ -4,6 +4,15 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class MoneyTest {
 
+    @Test
+    public void testSimpleAddition(){
+        Money five = Money.dolar(5);
+        Expression sum = five.Plus(five);
+        Bank bank = new Bank();
+        Money reduced = bank.reduce(sum,"USD");
+        assertEquals(Money.dolar(10),reduced);
+    }
+
 
     @Test
     public void testMultiplication(){
