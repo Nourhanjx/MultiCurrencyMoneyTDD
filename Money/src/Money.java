@@ -1,9 +1,12 @@
-class Money implements Expression{
+import java.util.Hashtable;
 
+class Money implements Expression{
 
     protected int amount;
 
     protected String currency;
+
+    private Hashtable rates = new Hashtable();
 
     Money(int amount,String currency){
         this.amount = amount;
@@ -16,7 +19,7 @@ class Money implements Expression{
         return amount == money.amount && currency().equals(money.currency());
     }
 
-    static Money dolar(int amount){
+    static Money dollar(int amount){
         return new Money(amount, "USD");
     }
 
@@ -31,13 +34,22 @@ class Money implements Expression{
         return amount+""+currency;
     }
 
-    Money times(int multiplier){
-        return new Money(amount *=  multiplier,currency);
+    public Money times(int multiplier){
+        return new Money(amount * multiplier,currency);
     }
 
-    Expression Plus(Money addend){
-        return new Money(amount+addend.amount,currency);
+    public Expression plus(Expression addend){
+        return new Sum(this, addend);
     }
+
+    public Money reduce(Bank bank, String to){
+        int rate = bank.rate(currency,to);
+        return new Money(amount/rate, to);
+    }
+
+
+
+
 
 
 }
